@@ -7,10 +7,12 @@ constructor(date) {
   this.longDay = []
   }
   dayFinder() {
-    let dayStr = this.date.toString().split(" ");
+    let dayStr =
+     this.date.toString().split(" ");
     this.day.push(dayStr[0]);
+    return this.day
   }
-  longhand(date) {
+  longhand() {
     if (this.day.includes("Fri")) {
     this.longDay.push("Friday");
   } else if (this.day.includes("Thu")) {
@@ -26,5 +28,6 @@ constructor(date) {
   } else if (this.day.includes("Sat")) {
     this.longDay.push("Saturday");
   };
+  return this.longDay
 };
 };

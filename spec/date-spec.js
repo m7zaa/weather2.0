@@ -2,25 +2,28 @@
 
 
  describe ('date syntax', function() {
-  it ("it should respond as 'undefined' if the syntax is incorrect", function() {
-    let date1 = new Date("yesterday").toString().split(" ");
-    expect(date1[0]).toEqual("Fri");
-  });
-
-  it ("Converts shorthand to longhand", function() {
-    let date1 = new Date("September 26, 1981").toString().split(" ");
-    expect(date1[0]).toEqual("Sat");
-  });
-
-    it ("it should respond as 'undefined' if the syntax is incorrect", function() {
-      let date1 = new NewDate("september 26, 1986").dayFinder();
-      expect(date1[0]).toEqual("Fri");
-    });
+  // it ("it should respond as 'undefined' if the syntax is incorrect", function() {
+  //   let date1 = new Date("yesterday").toString().split(" ");
+  //   expect(date1[0]).toEqual("Fri");
+  // });
+  //
+  // it ("Converts shorthand to longhand", function() {
+  //   let date1 = new Date("September 26, 1981").toString().split(" ");
+  //   expect(date1[0]).toEqual("Sat");
+  // });
 
     it ("it should respond as 'undefined' if the syntax is incorrect", function() {
-      let date1 = new NewDate("september 26, 1986").dayFinder();
-      expect(date1[0]).toEqual("Fri");
+      let date1 = new NewDate("september 26, 1986").dayFinder()
+      expect(date1).toEqual(["Fri"]);
     });
+
+    // it ("it should respond as 'undefined' if the syntax is incorrect", function() {
+    //   let date1 = new NewDate("september 26, 1986");
+    //   console.log(date1);
+    //   expect(date1.day).toEqual("Fri");
+    // });
+
+  });
 
 
 
@@ -46,4 +49,3 @@
   //
   //   expect(date1[0]).toEqual("Fri");
   // });
-});
