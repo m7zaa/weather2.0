@@ -13,7 +13,8 @@ $(document).ready(function() {
     $('#location').val("");
 
     let request = new XMLHttpRequest();
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
+    const url = `http://api.icndb.com/jokes/random?limitTo=[nerdy]
+`;
     request.onreadystatechange = function() {
       if (this.readyState === 4 && this.status === 200) {
         const response = JSON.parse(this.responseText);
@@ -26,8 +27,8 @@ $(document).ready(function() {
     request.send();
 
    const getElements = function(response) {
-      $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
-      $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
+      $('.showJoke').text(response.value.joke);
+      // $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
     }
   });
 });
