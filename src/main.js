@@ -1,35 +1,18 @@
 import $ from 'jquery';
-// import {
-//   HungryBear
-// } from './date';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css'
+import './styles.css';
+import { WeatherService } from './weather-service';
 
-// UI LOGIC BEGIN
 $(document).ready(function() {
   $('#weatherLocation').click(function() {
     const city = $('#location').val();
     $('#location').val("");
-// UI LOGIC END
 
-// BUSINESS LOGIC BEGIN
-    let promise = new Promise(function(resolve, reject) {
-      let request = new XMLHttpRequest();
-      const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
-      request.onload = function() {
-        if (this.status === 200) {
-          resolve(request.response);
-        } else {
-          reject(Error(request.statusText));
-        }
-      }
-      request.open("GET", url, true);
-      request.send();
-    });
-// BUSINESS LOGIC END
 
-// UI LOGIC BEGIN
+    let weatherService = new WeatherService();  // create instance of WeatherService class
+    let promise = weatherService.getWeatherByCity(city);  // call the instance method and pass in user input
+
     promise.then(function(response) {
       const body = JSON.parse(response);
       $('.showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
@@ -38,6 +21,5 @@ $(document).ready(function() {
       $('.showErrors').text(`There was an error processing your request: ${error.message}`);
     });
   });
-// UI LOGIC END
 
 });
