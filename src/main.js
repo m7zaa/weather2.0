@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 // import {
 //   HungryBear
@@ -7,28 +6,38 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'
 
+// UI LOGIC BEGIN
 $(document).ready(function() {
   $('#weatherLocation').click(function() {
     const city = $('#location').val();
     $('#location').val("");
+// UI LOGIC END
 
-    let request = new XMLHttpRequest();
-    const url = `http://api.icndb.com/jokes/random?limitTo=[nerdy]
-`;
-    request.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        const response = JSON.parse(this.responseText);
-        getElements(response);
-        console.log(response);
+// BUSINESS LOGIC BEGIN
+    let promise = new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest();
+      const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
+      request.onload = function() {
+        if (this.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(Error(request.statusText));
+        }
       }
-    }
+      request.open("GET", url, true);
+      request.send();
+    });
+// BUSINESS LOGIC END
 
-    request.open("GET", url, true);
-    request.send();
-
-   const getElements = function(response) {
-      $('.showJoke').text(response.value.joke);
-      // $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
-    }
+// UI LOGIC BEGIN
+    promise.then(function(response) {
+      const body = JSON.parse(response);
+      $('.showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
+      $('.showTemp').text(`The temperature in Kelvins is ${body.main.temp} degrees.`);
+    }, function(error) {
+      $('.showErrors').text(`There was an error processing your request: ${error.message}`);
+    });
   });
+// UI LOGIC END
+
 });
